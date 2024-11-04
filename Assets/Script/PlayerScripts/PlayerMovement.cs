@@ -1,85 +1,45 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerMovement : MonoBehaviour
 {
     public Joystick joystick;
-
-    private Rigidbody2D rigidBody;
     private Animator animator;
+    private Rigidbody2D rigidBody;
+    private PlayerAttack playerAttack;
 
-    private float moveSpeed = 3f;
-    private float horizontalMove, verticalMove;
-
-    public Vector2 moveDirection;
-    public Vector2 prevMoveDirection;
+    public float speed;
+    public Vector3 movement;
+    public bool canMove = true;
 
     // Start is called before the first frame update
     void Start()
     {
-        rigidBody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        rigidBody = GetComponent<Rigidbody2D>();
+        playerAttack = GetComponent<PlayerAttack>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        horizontalMove = joystick.Horizontal;
-        verticalMove = joystick.Vertical;
-
-        GetMoveDirection();
-
-        SetMovementAnimation();
-    }
-
-    void FixedUpdate()
-    {
-        rigidBody.MovePosition(rigidBody.position + moveDirection * moveSpeed * Time.deltaTime);
-    }
-
-    void GetMoveDirection()
-    {
-        if (horizontalMove >= .3f)
+        if (canMove)
         {
-            horizontalMove = 1;
-        }
-        else if (horizontalMove <= -.3f)
-        {
-            horizontalMove = -1;
-        }
-        else
-        {
-            horizontalMove = 0;
-        }
+            movement = new Vector3(joystick.Horizontal, joystick.Vertical, 0f);
 
-        if (verticalMove >= .3f)
-        {
-            verticalMove = 1;
+            animator.SetFloat("HorMove", movement.x);
+            animator.SetFloat("VerMove", movement.y);
+            animator.SetFloat("MagMove", movement.magnitude);
+
+            rigidBody.velocity = new Vector2 (movement.x, movement.y) * speed;
+
+            if ((movement.x == 0 && movement.y == 0) && (playerAttack.shootDirection.x != 0 || playerAttack.shootDirection.y != 0))
+            {
+                animator.SetFloat("HorIdle", playerAttack.shootDirection.x);
+                animator.SetFloat("VerIdle", playerAttack.shootDirection.y);
+                animator.SetFloat("MagIdle", playerAttack.shootDirection.magnitude);
+            }
         }
-        else if (verticalMove <= -.3f)
-        {
-            verticalMove = -1;
-        }
-        else
-        {
-            verticalMove = 0;
-        }
-
-        if ((horizontalMove == 0 && verticalMove == 0) && (moveDirection.x != 0 || moveDirection.y != 0))
-        {
-            prevMoveDirection = moveDirection;
-        }
-
-        moveDirection = new Vector2(horizontalMove, verticalMove).normalized;
-    }
-
-    void SetMovementAnimation()
-    {
-        animator.SetFloat("HorizontalMove", horizontalMove);
-        animator.SetFloat("VerticalMove", verticalMove);
-
-        animator.SetFloat("prevHorizontalMove", prevMoveDirection.x);
-        animator.SetFloat("prevVerticalMove", prevMoveDirection.y);
-
-        animator.SetFloat("MoveSpeed", moveDirection.sqrMagnitude);
     }
 }

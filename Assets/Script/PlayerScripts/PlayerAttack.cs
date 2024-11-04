@@ -9,13 +9,9 @@ public class PlayerAttack : MonoBehaviour
     PlayerMovement playerMovement;
 
     public GameObject arrowPrefab;
-
-    private bool isFiring = false;
-    public float horizontalMove, verticalMove;
-    private Vector2 shootDirection;
-
     public Transform firePoint;
 
+    public Vector2 shootDirection = new Vector2(0,0);
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -24,66 +20,19 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
-        GetShootingDirection();
-        if (playerMovement.moveDirection.x == 0 && playerMovement.moveDirection.y == 0)
-        {
-            horizontalMove = playerMovement.prevMoveDirection.x;
-            verticalMove = playerMovement.prevMoveDirection.y;
-        }
-        else
-        {
-            horizontalMove = playerMovement.moveDirection.x;
-            verticalMove = playerMovement.moveDirection.y;
-        }
+        Aiming();
     }
 
-    /*void GetShootingDirection()
+    void Aiming()
     {
-        if (playerMovement.moveDirection.x == 0 && playerMovement.moveDirection.y == 0)
+        Vector3 aim = new Vector3(playerMovement.movement.x, playerMovement.movement.y, 0.0f);
+        shootDirection = new Vector2(playerMovement.movement.x, playerMovement.movement.y);
+        if (shootDirection == Vector2.zero)
         {
-            horizontalMove = playerMovement.prevMoveDirection.x;
-            verticalMove = playerMovement.prevMoveDirection.y;
-        }
-        else
-        {
-            horizontalMove = playerMovement.moveDirection.x;
-            verticalMove = playerMovement.moveDirection.y;
+            shootDirection = firePoint.transform.position - transform.position;
         }
 
-        if (verticalMove == 0 && horizontalMove == 1)
-        {
-            Debug.Log("RIGHT");
-            firePoint.position = firePoint_Right.position;
-            arrowRotation = Quaternion.Euler(0, 0, -90);
-        }
-
-        if (verticalMove == 0 && horizontalMove == -1)
-        {
-            Debug.Log("LEFT");
-            firePoint.position = firePoint_Left.position;
-            arrowRotation = Quaternion.Euler(0, 0, 90);
-        }
-
-        if (verticalMove == 1 && horizontalMove == -1)
-        {
-            Debug.Log("UP");
-            firePoint.position = firePoint_Up.position;
-            arrowRotation = Quaternion.Euler(0, 0, 0);
-        }
-
-        if (verticalMove == -1)
-        {
-            Debug.Log("DOWN");
-            firePoint.position = firePoint_Down.position;
-            arrowRotation = Quaternion.Euler(0, 0, 180);
-        }
-    }*/
-
-    void GetShootingDirection()
-    {
-        Vector3 aim = new Vector3(playerMovement.moveDirection.x, playerMovement.moveDirection.y, 0.0f);
-        shootDirection = new Vector2(horizontalMove, verticalMove);
-        if (aim.magnitude > 0.0f && !isFiring)
+        if (aim.magnitude > 0.0f)
         {
             aim.Normalize();
             shootDirection.Normalize();
@@ -91,20 +40,24 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    public void Attack()
+    private void Attack()
     {
-        animator.SetBool("isAttacking", true);
-        GameObject arrow = Instantiate(arrowPrefab, firePoint.position, Quaternion.identity);
-        arrow.GetComponent<Rigidbody2D>().velocity = shootDirection * 3f;
-        arrow.transform.Rotate(0, 0, Mathf.Atan2(shootDirection.y, shootDirection.x) * Mathf.Rad2Deg);
-        GetComponent<PlayerMovement>().enabled = false;
-        isFiring = true;
+        animator.SetBool("isShooting", true);
+        playerMovement.canMove = false;
+        animator.SetFloat("HorShoot", shootDirection.x);
+        animator.SetFloat("VerShoot", shootDirection.y);
     }
 
-    void ResetAttack()
+    private void FireArrow()
     {
-        animator.SetBool("isAttacking", false);
-        GetComponent<PlayerMovement>().enabled = true;
-        isFiring = false;
+        GameObject arrow = Instantiate(arrowPrefab, firePoint.position, Quaternion.identity);
+        arrow.GetComponent<Rigidbody2D>().velocity = shootDirection * 4f;
+        arrow.transform.Rotate(0, 0, Mathf.Atan2(shootDirection.y, shootDirection.x) * Mathf.Rad2Deg);
+    }
+
+    private void ResetAttack()
+    {
+        animator.SetBool("isShooting", false);
+        playerMovement.canMove = true;
     }
 }
