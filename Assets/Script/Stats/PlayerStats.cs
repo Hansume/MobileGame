@@ -1,11 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerStats : CharacterStats
 {
-    protected override void Die()
+    public Slider healthbar;
+
+    private void Start()
     {
-        PlayerInstance.instance.KillPlayer();
+        healthbar.maxValue = maxHealth;
+    }
+
+    private void Update()
+    {
+        healthbar.value = currentHealth;
+        if (currentHealth <= 0)
+        {
+            PlayerInstance.instance.KillPlayer();
+        }
     }
 }

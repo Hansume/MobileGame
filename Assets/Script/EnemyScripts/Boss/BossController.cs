@@ -22,7 +22,6 @@ public class BossController: EnemiesController
             if (timer < 0)
             {
                 canMove = false;
-                canMelee = false;
                 canRange = false;
                 state = enemyState.Attack2;
             }
@@ -41,6 +40,6 @@ public class BossController: EnemiesController
         }
         canRange = true;
         timer = 10f;
-        ResetAttack();
+        //ResetAttack();
     }
 }

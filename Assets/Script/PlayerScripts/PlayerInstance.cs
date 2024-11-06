@@ -6,14 +6,16 @@ using UnityEngine.SceneManagement;
 public class PlayerInstance : MonoBehaviour
 {
     public static PlayerInstance instance;
+    private PlayerStats playerStats;
+
+    public GameObject player;
+    public Transform playerTransform;
 
     private void Awake()
     {
         instance = this;
+        playerStats = GetComponent<PlayerStats>();
     }
-
-    public GameObject player;
-    public Transform playerTransform;
 
     public string GetLayerName()
     {
@@ -23,6 +25,11 @@ public class PlayerInstance : MonoBehaviour
     public void TeleportPlayer(Vector3 newPosition)
     {
         player.transform.position = newPosition;
+    }
+
+    public void DamagePlayer(int damage)
+    {
+        playerStats.currentHealth -= damage;
     }
 
     public void KillPlayer()

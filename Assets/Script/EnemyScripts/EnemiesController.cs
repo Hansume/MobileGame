@@ -6,11 +6,17 @@ public class EnemiesController : MonoBehaviour
 {
     public float speed;
     public float attackRange;
+    public float skillCooldown;
+    private float skillTimer;
+
     protected bool canMove;
-    protected bool canMelee;
+    private bool canAttack;
 
+    public Vector2 attackPoint;
     private Transform playerTransform;
+    private Collider2D[] colliders2D;
 
+    private PlayerInstance playerInstance;
     protected SpriteRenderer spriteRenderer;
     private Animator animator;
     protected CharacterStats characterStats;
@@ -24,9 +30,12 @@ public class EnemiesController : MonoBehaviour
         animator = GetComponent<Animator>();
         characterStats = GetComponent<CharacterStats>();
 
-        playerTransform = PlayerInstance.instance.gameObject.transform;
+        playerInstance = PlayerInstance.instance;
+        playerTransform = playerInstance.gameObject.transform;
+
+        skillTimer = skillCooldown;
         canMove = true;
-        canMelee = true;
+        canAttack = true;
     }
 
     protected virtual void Update()
@@ -35,18 +44,19 @@ public class EnemiesController : MonoBehaviour
 
         if (!characterStats.isDead)
         {
-            if(canMove)
+            if (canMove)
             {
                 Movement();
             }
-            
-            if(canMelee)
+
+            if (canAttack)
             {
-                if (Vector2.Distance(transform.position, playerTransform.position) < attackRange)
-                {
-                    state = enemyState.Attack;
-                    canMove = false;
-                }
+                BasicAttack();
+            }
+            skillTimer -= Time.deltaTime;
+            if (skillTimer < 0)
+            {
+                SkillAttack();
             }
         }
         else
@@ -56,7 +66,7 @@ public class EnemiesController : MonoBehaviour
         }
     }
 
-    public void Movement()
+    private void Movement()
     {
         Vector3 targetPosition;
 
@@ -74,17 +84,54 @@ public class EnemiesController : MonoBehaviour
         transform.position = Vector2.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
     }
 
-    public void BasicAttack()
+    #region basicAttack
+    private void BasicAttack()
     {
-
+        colliders2D = Physics2D.OverlapBoxAll(transform.position, attackPoint, 0);
+        foreach (Collider2D playerCollider in colliders2D)
+        {
+            if (playerCollider.gameObject.tag == "Player")
+            {
+                state = enemyState.Attack;
+                canMove = false;
+            }
+        }
     }
 
-    public void ResetAttack()
+    private void ResetAttack()
     {
         state = enemyState.Run;
         canMove = true;
-        canMelee = true;
     }
+
+    private void BasicDamage()
+    {
+        playerInstance.DamagePlayer(1);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireCube(transform.position, attackPoint);
+    }
+    #endregion
+
+    #region SkillAttack
+    protected void SkillAttack()
+    {
+        canMove = false;
+        canAttack = false;
+        state = enemyState.Attack2;
+    }
+
+    private void ResetSkill()
+    {
+        state = enemyState.Run;
+        canMove = true;
+        canAttack = true;
+        skillTimer = skillCooldown;
+    }
+    #endregion
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -94,4 +141,6 @@ public class EnemiesController : MonoBehaviour
             Destroy(collision.gameObject);
         }
     }
+
+
 }

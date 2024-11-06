@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
     private Animator animator;
+    private Rigidbody2D rigidBody;
     PlayerMovement playerMovement;
 
     public GameObject arrowPrefab;
@@ -15,6 +16,7 @@ public class PlayerAttack : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
+        rigidBody = GetComponent<Rigidbody2D>();
         playerMovement = GetComponent<PlayerMovement>();
     }
 
@@ -44,6 +46,7 @@ public class PlayerAttack : MonoBehaviour
     {
         animator.SetBool("isShooting", true);
         playerMovement.canMove = false;
+        rigidBody.velocity = Vector3.zero;
         animator.SetFloat("HorShoot", shootDirection.x);
         animator.SetFloat("VerShoot", shootDirection.y);
     }
@@ -51,7 +54,7 @@ public class PlayerAttack : MonoBehaviour
     private void FireArrow()
     {
         GameObject arrow = Instantiate(arrowPrefab, firePoint.position, Quaternion.identity);
-        arrow.GetComponent<Rigidbody2D>().velocity = shootDirection * 4f;
+        arrow.GetComponent<Rigidbody2D>().velocity = shootDirection * 7.5f;
         arrow.transform.Rotate(0, 0, Mathf.Atan2(shootDirection.y, shootDirection.x) * Mathf.Rad2Deg);
     }
 

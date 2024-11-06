@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
             animator.SetFloat("VerMove", movement.y);
             animator.SetFloat("MagMove", movement.magnitude);
 
-            rigidBody.velocity = new Vector2 (movement.x, movement.y) * speed;
+            rigidBody.velocity = new Vector2(movement.x, movement.y) * speed;
 
             if ((movement.x == 0 && movement.y == 0) && (playerAttack.shootDirection.x != 0 || playerAttack.shootDirection.y != 0))
             {
