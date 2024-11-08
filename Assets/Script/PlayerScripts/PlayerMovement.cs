@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rigidBody;
     private PlayerAttack playerAttack;
 
-    public float speed;
+    private float speed;
     public Vector3 movement;
     public bool canMove = true;
 
@@ -22,11 +22,12 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (canMove)
         {
             movement = new Vector3(joystick.Horizontal, joystick.Vertical, 0f);
+            speed = GetComponent<PlayerStats>().moveSpeed;
 
             animator.SetFloat("HorMove", movement.x);
             animator.SetFloat("VerMove", movement.y);

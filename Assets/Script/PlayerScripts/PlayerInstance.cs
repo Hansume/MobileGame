@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class PlayerInstance : MonoBehaviour
 {
     public static PlayerInstance instance;
-    private PlayerStats playerStats;
+    public PlayerStats playerStats;
 
     public GameObject player;
     public Transform playerTransform;

@@ -4,22 +4,23 @@ using UnityEngine;
 
 public class EnemiesController : MonoBehaviour
 {
-    public float speed;
-    public float attackRange;
     public float skillCooldown;
     private float skillTimer;
 
     protected bool canMove;
     private bool canAttack;
 
-    public Vector2 attackPoint;
+    public Vector2 attackRange;
+    public Vector2 skillRange;
+
+    public Transform center;
     private Transform playerTransform;
     private Collider2D[] colliders2D;
 
-    private PlayerInstance playerInstance;
-    protected SpriteRenderer spriteRenderer;
+    protected PlayerInstance playerInstance;
+    private SpriteRenderer spriteRenderer;
     private Animator animator;
-    protected CharacterStats characterStats;
+    private CharacterStats characterStats;
 
     public enum enemyState { Run, Attack, Attack2, Death }
     public enemyState state;
@@ -53,6 +54,7 @@ public class EnemiesController : MonoBehaviour
             {
                 BasicAttack();
             }
+
             skillTimer -= Time.deltaTime;
             if (skillTimer < 0)
             {
@@ -81,13 +83,13 @@ public class EnemiesController : MonoBehaviour
             targetPosition = playerTransform.position + new Vector3(-1.5f, .5f, 0);
         }
 
-        transform.position = Vector2.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, targetPosition, GetComponent<CharacterStats>().moveSpeed * Time.deltaTime);
     }
 
     #region basicAttack
     private void BasicAttack()
     {
-        colliders2D = Physics2D.OverlapBoxAll(transform.position, attackPoint, 0);
+        colliders2D = Physics2D.OverlapBoxAll(center.position, attackRange, 0);
         foreach (Collider2D playerCollider in colliders2D)
         {
             if (playerCollider.gameObject.tag == "Player")
@@ -104,24 +106,25 @@ public class EnemiesController : MonoBehaviour
         canMove = true;
     }
 
-    private void BasicDamage()
+    protected virtual void BasicDamage()
     {
         playerInstance.DamagePlayer(1);
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireCube(transform.position, attackPoint);
     }
     #endregion
 
     #region SkillAttack
-    protected void SkillAttack()
+    protected virtual void SkillAttack()
     {
-        canMove = false;
-        canAttack = false;
-        state = enemyState.Attack2;
+        colliders2D = Physics2D.OverlapBoxAll(center.position, skillRange, 0);
+        foreach (Collider2D playerCollider in colliders2D)
+        {
+            if (playerCollider.gameObject.tag == "Player")
+            {
+                canMove = false;
+                canAttack = false;
+                state = enemyState.Attack2;
+            }
+        }
     }
 
     private void ResetSkill()
@@ -131,7 +134,17 @@ public class EnemiesController : MonoBehaviour
         canAttack = true;
         skillTimer = skillCooldown;
     }
+
+    protected virtual void SkillDamage()
+    {
+        playerInstance.DamagePlayer(2);
+    }
     #endregion
+
+    protected virtual IEnumerator StatusEffects(float time)
+    {
+        yield return new WaitForSeconds(time);
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -142,5 +155,12 @@ public class EnemiesController : MonoBehaviour
         }
     }
 
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireCube(center.position, attackRange);
 
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireCube(center.position, skillRange);
+    }
 }

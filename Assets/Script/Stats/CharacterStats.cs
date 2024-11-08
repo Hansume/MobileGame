@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
 {
-    public int maxHealth;
-    public int currentHealth;
+    public float maxHealth;
+    public float currentHealth;
+    public float moveSpeed;
 
     public bool isDead = false;
     private void Awake()
