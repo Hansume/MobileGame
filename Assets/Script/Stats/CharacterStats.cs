@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterStats : MonoBehaviour
 {
@@ -8,8 +9,10 @@ public class CharacterStats : MonoBehaviour
     public float currentHealth;
     public float moveSpeed;
 
+    public bool canHit = true;
     public bool isDead = false;
-    private void Awake()
+
+    private void Start()
     {
         currentHealth = maxHealth;
     }

@@ -8,7 +8,7 @@ public class EnemiesController : MonoBehaviour
     private float skillTimer;
 
     protected bool canMove;
-    private bool canAttack;
+    protected bool canAttack;
 
     public Vector2 attackRange;
     public Vector2 skillRange;
@@ -19,8 +19,8 @@ public class EnemiesController : MonoBehaviour
 
     protected PlayerInstance playerInstance;
     private SpriteRenderer spriteRenderer;
-    private Animator animator;
-    private CharacterStats characterStats;
+    protected Animator animator;
+    protected CharacterStats characterStats;
 
     public enum enemyState { Run, Attack, Attack2, Death }
     public enemyState state;
@@ -150,8 +150,11 @@ public class EnemiesController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Arrow")
         {
-            characterStats.TakeDamage(1);
             Destroy(collision.gameObject);
+            if (characterStats.canHit)
+            {
+                characterStats.TakeDamage(1);
+            }
         }
     }
 

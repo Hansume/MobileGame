@@ -5,12 +5,25 @@ using UnityEngine.UI;
 
 public class PlayerStats : CharacterStats
 {
-    public Slider healthbar;
+    [SerializeField] private Slider healthbar;
+
+    private void Awake()
+    {
+        healthbar.maxValue = maxHealth;
+    }
+
+    private void Update()
     {
         healthbar.value = currentHealth;
         if (currentHealth <= 0)
         {
-            PlayerInstance.instance.KillPlayer();
+            Die();
         }
+        
+    }
+
+    protected override void Die()
+    {
+        PlayerInstance.instance.KillPlayer();
     }
 }

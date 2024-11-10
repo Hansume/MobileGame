@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
     private Animator animator;
     private Rigidbody2D rigidBody;
-    PlayerMovement playerMovement;
+    public AudioSource fireArrowAudio;
+    private PlayerMovement playerMovement;
 
     public GameObject arrowPrefab;
     public Transform firePoint;
@@ -53,6 +51,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void FireArrow()
     {
+        fireArrowAudio.Play();
         GameObject arrow = Instantiate(arrowPrefab, firePoint.position, Quaternion.identity);
         arrow.GetComponent<Rigidbody2D>().velocity = shootDirection * 7.5f;
         arrow.transform.Rotate(0, 0, Mathf.Atan2(shootDirection.y, shootDirection.x) * Mathf.Rad2Deg);

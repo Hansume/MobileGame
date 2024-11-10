@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class DungeonSpawning : MonoBehaviour
 {
+    public static int dungeonEnemies = 4;
+
+    public AudioSource backgroundMusic;
     public GameObject enemyPrefab;
     protected GameObject currentEnemy;
     public Transform leftPoint;
@@ -12,10 +15,12 @@ public class DungeonSpawning : MonoBehaviour
     private Vector2 leftCorner;
     private Vector2 rightCorner;
 
-    void Start()
+    private void Start()
     {
         leftCorner = new Vector2(leftPoint.position.x, leftPoint.position.y);
-        rightCorner = new Vector2(rightPoint.position.x, rightPoint.position.y);   
+        rightCorner = new Vector2(rightPoint.position.x, rightPoint.position.y);
+
+        currentEnemy = null;
     }
 
     protected virtual void Update()
@@ -37,6 +42,7 @@ public class DungeonSpawning : MonoBehaviour
             if (playerInArea && currentEnemy == null && !hasCalled)
             {
                 Spawning();
+                backgroundMusic.Play();
                 hasCalled = true;
             }
             else if (!playerInArea && currentEnemy != null)
@@ -44,11 +50,13 @@ public class DungeonSpawning : MonoBehaviour
                 if (currentEnemy.GetComponent<CharacterStats>().isDead)
                 {
                     canCall = false;
+                    dungeonEnemies--;
                 }
                 else
                 {
                     DeSpawning();
                 }
+                backgroundMusic.Stop();
             }
         }
     }

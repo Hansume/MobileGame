@@ -8,12 +8,12 @@ public class PlayerMovement : MonoBehaviour
     private Animator animator;
     private Rigidbody2D rigidBody;
     private PlayerAttack playerAttack;
+    public AudioSource moveSound;
 
     private float speed;
     public Vector3 movement;
     public bool canMove = true;
 
-    // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -21,13 +21,14 @@ public class PlayerMovement : MonoBehaviour
         playerAttack = GetComponent<PlayerAttack>();
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         if (canMove)
         {
             movement = new Vector3(joystick.Horizontal, joystick.Vertical, 0f);
             speed = GetComponent<PlayerStats>().moveSpeed;
+
+            RoundValue();
 
             animator.SetFloat("HorMove", movement.x);
             animator.SetFloat("VerMove", movement.y);
@@ -41,6 +42,47 @@ public class PlayerMovement : MonoBehaviour
                 animator.SetFloat("VerIdle", playerAttack.shootDirection.y);
                 animator.SetFloat("MagIdle", playerAttack.shootDirection.magnitude);
             }
+
+            if (movement.magnitude > 0f)
+            {
+                if (!moveSound.isPlaying)
+                {
+                    moveSound.Play();
+                }
+            }
+            else
+            {
+                moveSound.Stop();
+            }
+        }
+    }
+
+    private void RoundValue()
+    {
+        if (movement.x >= .2f)
+        {
+            movement.x = 1;
+        }
+        else if (movement.x <= -.2f)
+        {
+            movement.x = -1;
+        }
+        else
+        {
+            movement.x = 0;
+        }
+
+        if (movement.y >= .2f)
+        {
+            movement.y = 1;
+        }
+        else if (movement.y <= -.2f)
+        {
+            movement.y = -1;
+        }
+        else
+        {
+            movement.y = 0;
         }
     }
 }

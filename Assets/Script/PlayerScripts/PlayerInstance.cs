@@ -27,7 +27,7 @@ public class PlayerInstance : MonoBehaviour
         player.transform.position = newPosition;
     }
 
-    public void DamagePlayer(int damage)
+    public void DamagePlayer(float damage)
     {
         playerStats.currentHealth -= damage;
     }
