@@ -12,7 +12,7 @@ public class CharacterStats : MonoBehaviour
     public bool canHit = true;
     public bool isDead = false;
 
-    private void Start()
+    protected virtual void Start()
     {
         currentHealth = maxHealth;
     }

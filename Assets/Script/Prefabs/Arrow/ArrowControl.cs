@@ -12,7 +12,7 @@ public class ArrowControl : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         player = PlayerInstance.instance;
-        Destroy(gameObject, 5f);
+        Destroy(gameObject, 2f);
     }
 
     private void Update()

@@ -10,6 +10,8 @@ public class PlayerAttack : MonoBehaviour
     public GameObject arrowPrefab;
     public Transform firePoint;
 
+    private bool isFired = false;
+
     public Vector2 shootDirection = new Vector2(0,0);
     void Start()
     {
@@ -51,15 +53,21 @@ public class PlayerAttack : MonoBehaviour
 
     private void FireArrow()
     {
-        fireArrowAudio.Play();
-        GameObject arrow = Instantiate(arrowPrefab, firePoint.position, Quaternion.identity);
-        arrow.GetComponent<Rigidbody2D>().velocity = shootDirection * 7.5f;
-        arrow.transform.Rotate(0, 0, Mathf.Atan2(shootDirection.y, shootDirection.x) * Mathf.Rad2Deg);
+        if (!isFired)
+        {
+            isFired = true;
+            fireArrowAudio.Play();
+            GameObject arrow = Instantiate(arrowPrefab, firePoint.position, Quaternion.identity);
+            arrow.GetComponent<Rigidbody2D>().velocity = shootDirection * 7.5f;
+            arrow.transform.Rotate(0, 0, Mathf.Atan2(shootDirection.y, shootDirection.x) * Mathf.Rad2Deg);
+        }
     }
 
     private void ResetAttack()
     {
+        isFired = false;
         animator.SetBool("isShooting", false);
         playerMovement.canMove = true;
+
     }
 }

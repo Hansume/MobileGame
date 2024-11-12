@@ -28,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
             movement = new Vector3(joystick.Horizontal, joystick.Vertical, 0f);
             speed = GetComponent<PlayerStats>().moveSpeed;
 
-            RoundValue();
+            MoveSoundEffects();
 
             animator.SetFloat("HorMove", movement.x);
             animator.SetFloat("VerMove", movement.y);
@@ -43,46 +43,22 @@ public class PlayerMovement : MonoBehaviour
                 animator.SetFloat("MagIdle", playerAttack.shootDirection.magnitude);
             }
 
-            if (movement.magnitude > 0f)
-            {
-                if (!moveSound.isPlaying)
-                {
-                    moveSound.Play();
-                }
-            }
-            else
-            {
-                moveSound.Stop();
-            }
+            
         }
     }
 
-    private void RoundValue()
+    private void MoveSoundEffects()
     {
-        if (movement.x >= .2f)
+        if (movement.magnitude > 0f)
         {
-            movement.x = 1;
-        }
-        else if (movement.x <= -.2f)
-        {
-            movement.x = -1;
-        }
-        else
-        {
-            movement.x = 0;
-        }
-
-        if (movement.y >= .2f)
-        {
-            movement.y = 1;
-        }
-        else if (movement.y <= -.2f)
-        {
-            movement.y = -1;
+            if (!moveSound.isPlaying)
+            {
+                moveSound.Play();
+            }
         }
         else
         {
-            movement.y = 0;
+            moveSound.Stop();
         }
     }
 }
