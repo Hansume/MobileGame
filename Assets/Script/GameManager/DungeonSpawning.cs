@@ -2,61 +2,59 @@ using UnityEngine;
 
 public class DungeonSpawning : MonoBehaviour
 {
-    public static int dungeonEnemies = 4;
+    public static int dungeonEnemies = 3;
 
     public AudioSource backgroundMusic;
     public GameObject enemyPrefab;
     protected GameObject currentEnemy;
-    public Transform leftPoint;
-    public Transform rightPoint;
+
+    [SerializeField] private Transform leftPoint;
+    [SerializeField] private Transform rightPoint;
+    protected Transform playerTransform;
 
     private bool hasCalled = false;
     private bool canCall = true;
-    private Vector2 leftCorner;
-    private Vector2 rightCorner;
+    private Vector2 center;
+    private Vector3 size;
 
+    protected Bounds areaBounds;
     private void Start()
     {
-        leftCorner = new Vector2(leftPoint.position.x, leftPoint.position.y);
-        rightCorner = new Vector2(rightPoint.position.x, rightPoint.position.y);
+        center = (leftPoint.position + rightPoint.position) / 2;
+        size = new Vector2(Mathf.Abs(rightPoint.position.x - leftPoint.position.x), Mathf.Abs(rightPoint.position.y - leftPoint.position.y));
 
-        currentEnemy = null;
+        areaBounds = new Bounds(center, size);
+
+        playerTransform = PlayerInstance.instance.transform;
     }
 
     protected virtual void Update()
     {
         if (canCall)
         {
-            Collider2D[] colliders = Physics2D.OverlapAreaAll(leftCorner, rightCorner);
-            bool playerInArea = false;
-
-            foreach (Collider2D collider in colliders)
+            if (areaBounds.Contains(playerTransform.position))
             {
-                if (collider.CompareTag("Player"))
+                if (!hasCalled)
                 {
-                    playerInArea = true;
-                    break;
+                    Spawning();
+                    backgroundMusic.Play();
+                    hasCalled = true;
                 }
             }
-
-            if (playerInArea && currentEnemy == null && !hasCalled)
+            else
             {
-                Spawning();
-                backgroundMusic.Play();
-                hasCalled = true;
+                backgroundMusic.Stop();
+                DeSpawning();
             }
-            else if (!playerInArea && currentEnemy != null)
+
+            if (currentEnemy != null)
             {
                 if (currentEnemy.GetComponent<CharacterStats>().isDead)
                 {
                     canCall = false;
+                    backgroundMusic.Stop();
                     dungeonEnemies--;
                 }
-                else
-                {
-                    DeSpawning();
-                }
-                backgroundMusic.Stop();
             }
         }
     }
@@ -69,17 +67,11 @@ public class DungeonSpawning : MonoBehaviour
     private void DeSpawning()
     {
         Destroy(currentEnemy);
-        currentEnemy = null;
         hasCalled = false;
     }
-
-    private void OnDrawGizmosSelected()
+    void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
-
-        Vector2 center = (leftCorner + rightCorner) / 2;
-        Vector2 size = new Vector2(Mathf.Abs(rightCorner.x - leftCorner.x), Mathf.Abs(rightCorner.y - leftCorner.y));
-
         Gizmos.DrawWireCube(center, size);
     }
 }

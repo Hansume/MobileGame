@@ -7,8 +7,9 @@ public class BossSpawning : DungeonSpawning
 {
     public GameObject bossPrefab;
     private GameObject bossGameobject;
-
+    [SerializeField] private GameObject bossEntrance;
     public GameObject gemPrefab;
+
     public Transform[] firePositions = new Transform[15];
     [SerializeField] private GameObject bulletPrefab;
     private int bulletsFired = 0;
@@ -22,19 +23,17 @@ public class BossSpawning : DungeonSpawning
     {
         base.Update();
 
-        if (currentEnemy != null)
+        if (dungeonEnemies == 0)
         {
-            if (currentEnemy.GetComponent<CharacterStats>().isDead)
+            bossEntrance.SetActive(true);
+            if (!bossSpawned)
             {
-                if (!bossSpawned)
-                {
-                    StartCoroutine(SpawnBoss());
-                    bossSpawned = true;
-                }
+                StartCoroutine(SpawnBoss());
+                bossSpawned = true;
             }
         }
 
-        if (bossSpawned && bossGameobject != null)
+        if (bossGameobject != null)
         {
             bossHealthbar.value = bossStats.currentHealth;
 
@@ -46,12 +45,9 @@ public class BossSpawning : DungeonSpawning
 
             if (bossStats.isDead)
             {
-                dungeonEnemies--;
-            }
-
-            if (dungeonEnemies == 0)
-            {
                 Instantiate(gemPrefab);
+                bossEntrance.SetActive(false);
+                bossGameobject = null;
             }
         }
     }
