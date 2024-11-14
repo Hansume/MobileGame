@@ -7,12 +7,11 @@ public class PlayerAttack : MonoBehaviour
     public AudioSource fireArrowAudio;
     private PlayerMovement playerMovement;
 
-    public GameObject arrowPrefab;
     public Transform firePoint;
 
     private bool isFired = false;
 
-    public Vector2 shootDirection = new Vector2(0,0);
+    public Vector2 shootDirection = new Vector2(1,0);
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -38,7 +37,7 @@ public class PlayerAttack : MonoBehaviour
         {
             aim.Normalize();
             shootDirection.Normalize();
-            firePoint.transform.localPosition = aim;
+            firePoint.transform.localPosition = aim * 0.5f;
         }
     }
 
@@ -57,7 +56,7 @@ public class PlayerAttack : MonoBehaviour
         {
             isFired = true;
             fireArrowAudio.Play();
-            GameObject arrow = Instantiate(arrowPrefab, firePoint.position, Quaternion.identity);
+            GameObject arrow = Pooler.instance.SpawnFromPool("Player arrow", firePoint.position, Quaternion.identity);
             arrow.GetComponent<Rigidbody2D>().velocity = shootDirection * 7.5f;
             arrow.transform.Rotate(0, 0, Mathf.Atan2(shootDirection.y, shootDirection.x) * Mathf.Rad2Deg);
         }

@@ -23,7 +23,7 @@ public class BossSpawning : DungeonSpawning
     {
         base.Update();
 
-        if (dungeonEnemies == 0)
+        if (dungeonEnemies == 0 && inBound)
         {
             bossEntrance.SetActive(true);
             if (!bossSpawned)

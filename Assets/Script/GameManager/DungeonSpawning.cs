@@ -10,14 +10,15 @@ public class DungeonSpawning : MonoBehaviour
 
     [SerializeField] private Transform leftPoint;
     [SerializeField] private Transform rightPoint;
-    protected Transform playerTransform;
+    private Transform playerTransform;
 
     private bool hasCalled = false;
     private bool canCall = true;
+    protected bool inBound = false;
     private Vector2 center;
     private Vector3 size;
 
-    protected Bounds areaBounds;
+    private Bounds areaBounds;
     private void Start()
     {
         center = (leftPoint.position + rightPoint.position) / 2;
@@ -30,31 +31,31 @@ public class DungeonSpawning : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (canCall)
+        if (areaBounds.Contains(playerTransform.position))
         {
-            if (areaBounds.Contains(playerTransform.position))
+            inBound = true;
+            if (!hasCalled && canCall)
             {
-                if (!hasCalled)
-                {
-                    Spawning();
-                    backgroundMusic.Play();
-                    hasCalled = true;
-                }
+                Spawning();
+                backgroundMusic.Play();
+                hasCalled = true;
             }
-            else
-            {
-                backgroundMusic.Stop();
-                DeSpawning();
-            }
+        }
+        else
+        {
+            inBound = false;
+            backgroundMusic.Stop();
+            DeSpawning();
+        }
 
-            if (currentEnemy != null)
+        if (currentEnemy != null)
+        {
+            if (currentEnemy.GetComponent<CharacterStats>().isDead)
             {
-                if (currentEnemy.GetComponent<CharacterStats>().isDead)
-                {
-                    canCall = false;
-                    backgroundMusic.Stop();
-                    dungeonEnemies--;
-                }
+                canCall = false;
+                backgroundMusic.Stop();
+                dungeonEnemies--;
+                currentEnemy = null;
             }
         }
     }
@@ -62,6 +63,7 @@ public class DungeonSpawning : MonoBehaviour
     private void Spawning()
     {
         currentEnemy = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
+        //currentEnemy = Pooler.instance.SpawnFromPool("Monster", transform.position, Quaternion.identity);
     }
 
     private void DeSpawning()
