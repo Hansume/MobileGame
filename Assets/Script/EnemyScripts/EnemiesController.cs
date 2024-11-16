@@ -146,11 +146,6 @@ public class EnemiesController : MonoBehaviour
         yield return new WaitForSeconds(time);
     }
 
-    private void OnEnable()
-    {
-        characterStats.currentHealth = characterStats.maxHealth;
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Arrow")

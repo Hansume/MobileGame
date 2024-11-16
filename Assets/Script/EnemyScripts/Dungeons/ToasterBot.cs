@@ -4,17 +4,14 @@ using UnityEngine;
 
 public class ToasterBot : EnemiesController
 {
-    //Slow Shooting Speed
+    //Burning
     protected override void BasicDamage()
     {
         base.BasicDamage();
-        playerInstance.gameObject.GetComponent<Animator>().SetFloat("shootingSpeed", 0.25f);
-        StartCoroutine(StatusEffects(3f));
-    }
-
-    protected override IEnumerator StatusEffects(float time)
-    {
-        yield return base.StatusEffects(time);
-        playerInstance.gameObject.GetComponent<Animator>().SetFloat("shootingSpeed", 1f);
+        float burnRate = Random.value;
+        if (burnRate <= 0.2f)
+        {
+            playerInstance.playerStats.isBurn = true;
+        }
     }
 }

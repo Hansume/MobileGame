@@ -63,7 +63,6 @@ public class DungeonSpawning : MonoBehaviour
     private void Spawning()
     {
         currentEnemy = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
-        //currentEnemy = Pooler.instance.SpawnFromPool("Monster", transform.position, Quaternion.identity);
     }
 
     private void DeSpawning()
@@ -71,6 +70,7 @@ public class DungeonSpawning : MonoBehaviour
         Destroy(currentEnemy);
         hasCalled = false;
     }
+
     void OnDrawGizmos()
     {
         Gizmos.color = Color.green;

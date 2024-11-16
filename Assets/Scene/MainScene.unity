@@ -27410,9 +27410,9 @@ RectTransform:
   m_Father: {fileID: 879909104}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.7266666, y: 1}
+  m_AnchorMax: {x: 0.47666666, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 10, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &841638697
 MonoBehaviour:
@@ -27853,8 +27853,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: 0.000061035156, y: 0}
-  m_SizeDelta: {x: 0.00012207, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &880043626
 PrefabInstance:
@@ -68656,6 +68656,10 @@ MonoBehaviour:
     prefab: {fileID: 6028175612957436214, guid: 0f891fe2b71a1ea41b2268da60d2cdf5,
       type: 3}
     size: 3
+  - tag: Boss Rock
+    prefab: {fileID: 7038512890852340981, guid: 8cb44dfc4c2a0d642900e217701bcd76,
+      type: 3}
+    size: 10
 --- !u!1 &1283197211
 GameObject:
   m_ObjectHideFlags: 0
@@ -76094,7 +76098,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 858.7, y: 393.3}
+  m_AnchoredPosition: {x: 858, y: 393.3}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1809882066
@@ -79816,6 +79820,9 @@ MonoBehaviour:
   moveSpeed: 2
   canHit: 1
   isDead: 0
+  isSlow: 0
+  isStun: 0
+  isBurn: 0
 --- !u!70 &1012006894227905754
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

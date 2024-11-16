@@ -42,8 +42,6 @@ public class PlayerMovement : MonoBehaviour
                 animator.SetFloat("VerIdle", playerAttack.shootDirection.y);
                 animator.SetFloat("MagIdle", playerAttack.shootDirection.magnitude);
             }
-
-            
         }
     }
 

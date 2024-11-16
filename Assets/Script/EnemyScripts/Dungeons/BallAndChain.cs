@@ -10,16 +10,7 @@ public class BallAndChain : EnemiesController
         base.BasicDamage();
         float stunRate = Random.value;
         if (stunRate <= 0.2f){
-            playerInstance.gameObject.GetComponent<PlayerMovement>().canMove = false;
-            playerInstance.gameObject.GetComponent<PlayerAttack>().enabled = false;
-            StartCoroutine(DestunnedPlayer());
+            playerInstance.playerStats.isStun = true;
         }
-    }
-
-    private IEnumerator DestunnedPlayer()
-    {
-        yield return new WaitForSeconds(3);
-        playerInstance.gameObject.GetComponent<PlayerMovement>().canMove = true;
-        playerInstance.gameObject.GetComponent<PlayerAttack>().enabled = true;
     }
 }

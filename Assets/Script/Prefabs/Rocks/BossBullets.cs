@@ -5,9 +5,14 @@ using UnityEngine.UIElements;
 
 public class BossBullets : MonoBehaviour
 {
-    private void Start()
+    private void OnEnable()
     {
-        Destroy(gameObject, 2f);
+        Invoke("Deactive", 2f);
+    }
+
+    void Deactive()
+    {
+        gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -15,7 +20,7 @@ public class BossBullets : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             PlayerInstance.instance.DamagePlayer(1);
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 }

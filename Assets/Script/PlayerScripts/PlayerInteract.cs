@@ -16,7 +16,7 @@ public class PlayerInteract : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+/*    void Update()
     {
         interactables = Physics2D.OverlapCircle(transform.position, radius, interactablesLayer);
         if (interactables == null && prevInteractables != null)
@@ -34,7 +34,7 @@ public class PlayerInteract : MonoBehaviour
             interactables.GetComponent<BoxCollider2D>().enabled = false;
             interactables.GetComponent<Interactables>().Interact();
         }
-    }
+    }*/
 
     private void OnDrawGizmosSelected()
     {

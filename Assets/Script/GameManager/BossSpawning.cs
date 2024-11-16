@@ -65,7 +65,7 @@ public class BossSpawning : DungeonSpawning
     {
         while (bulletsFired < firePositions.Length)
         {
-            Instantiate(bulletPrefab, firePositions[bulletsFired].position, Quaternion.Euler(0, 0, 90));
+            Pooler.instance.SpawnFromPool("Boss Rock", firePositions[bulletsFired].position, Quaternion.Euler(0, 0, 90));
 
             bulletsFired++;
 
