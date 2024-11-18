@@ -16,16 +16,21 @@ public class Interactables : MonoBehaviour
     {
         if (isInteracted)
         {
-
+            animator.SetBool("isOpened", true);
         }
         else
         {
-
+            animator.SetBool("isOpened", false);
         }
     }
 
-    public void Interact()
+    public virtual void Interact()
     {
         isInteracted = true;
+    }
+    
+    public virtual void ResetInteract()
+    {
+        isInteracted = false;
     }
 }

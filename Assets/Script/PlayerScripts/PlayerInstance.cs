@@ -9,7 +9,6 @@ public class PlayerInstance : MonoBehaviour
     public PlayerStats playerStats;
 
     public GameObject player;
-    public Transform playerTransform;
 
     private void Awake()
     {
