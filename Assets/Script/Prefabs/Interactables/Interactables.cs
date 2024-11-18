@@ -4,25 +4,28 @@ using UnityEngine;
 
 public class Interactables : MonoBehaviour
 {
-    Animator animator;
+    private Animator animator;
+    private bool isInteracted = false;
 
     private void Start()
     {
         animator = GetComponent<Animator>();
     }
 
+    private void Update()
+    {
+        if (isInteracted)
+        {
+
+        }
+        else
+        {
+
+        }
+    }
+
     public void Interact()
     {
-        animator.SetBool("isOpened", true);
-        Debug.Log("1");
-    }
-
-    public void ResetInteract()
-    {
-        animator.SetBool("isOpened", false);
-    }
-    protected virtual void SpecialInteraction()
-    {
-
+        isInteracted = true;
     }
 }

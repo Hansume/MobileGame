@@ -150,7 +150,6 @@ public class EnemiesController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Arrow")
         {
-            Destroy(collision.gameObject);
             if (characterStats.canHit)
             {
                 characterStats.TakeDamage(1);
