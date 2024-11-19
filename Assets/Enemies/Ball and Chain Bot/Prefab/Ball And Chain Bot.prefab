@@ -170,6 +170,7 @@ MonoBehaviour:
   maxHealth: 3
   currentHealth: 0
   moveSpeed: 1
+  damage: 1
   canHit: 1
   isDead: 0
 --- !u!114 &-584686139619262556

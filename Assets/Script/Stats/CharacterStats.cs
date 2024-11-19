@@ -8,6 +8,7 @@ public class CharacterStats : MonoBehaviour
     public float maxHealth;
     public float currentHealth;
     public float moveSpeed;
+    public int damage;
 
     public bool canHit = true;
     public bool isDead = false;

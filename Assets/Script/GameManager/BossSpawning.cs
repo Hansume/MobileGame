@@ -8,11 +8,10 @@ public class BossSpawning : DungeonSpawning
     public GameObject bossPrefab;
     private GameObject bossGameobject;
     [SerializeField] private GameObject bossEntrance;
-    public GameObject gemPrefab;
+    public GameObject chestPrefab;
 
     public Transform[] firePositions = new Transform[15];
     [SerializeField] private GameObject bulletPrefab;
-    private int bulletsFired = 0;
 
     [SerializeField] private Slider bossHealthbar;
 
@@ -45,7 +44,7 @@ public class BossSpawning : DungeonSpawning
 
             if (bossStats.isDead)
             {
-                Instantiate(gemPrefab);
+                Instantiate(chestPrefab, transform.position, Quaternion.identity);
                 bossEntrance.SetActive(false);
                 bossGameobject = null;
             }
@@ -63,6 +62,7 @@ public class BossSpawning : DungeonSpawning
 
     private IEnumerator SpawnRock()
     {
+        int bulletsFired = 0;
         while (bulletsFired < firePositions.Length)
         {
             Pooler.instance.SpawnFromPool("Boss Rock", firePositions[bulletsFired].position, Quaternion.Euler(0, 0, 90));
@@ -71,6 +71,5 @@ public class BossSpawning : DungeonSpawning
 
             yield return new WaitForSeconds(.3f);
         }
-        bulletsFired = 0;
     }
 }

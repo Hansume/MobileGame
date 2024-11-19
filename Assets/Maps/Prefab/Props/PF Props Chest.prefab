@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 2055102311959635375}
   - component: {fileID: 2055102311959635368}
   - component: {fileID: 2055102311959635374}
-  - component: {fileID: 7324699631139482903}
   - component: {fileID: 6112775441602359576}
+  - component: {fileID: 2505936284611553302}
   m_Layer: 6
   m_Name: PF Props Chest
   m_TagString: Untagged
@@ -133,18 +133,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.93784136, y: 0.5620947}
   m_EdgeRadius: 0
---- !u!114 &7324699631139482903
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2055102311959635369}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf66f44cc5bb817498923c88b5dcac64, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &6112775441602359576
 Animator:
   serializedVersion: 5
@@ -166,6 +154,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2505936284611553302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2055102311959635369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ada3aa85fa94ae8498fbac165a55d826, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gemPrefab: {fileID: 6957935765215401646, guid: 5cee87e950448a143b57d38f2deea403,
+    type: 3}
 --- !u!1 &2055102312182832482
 GameObject:
   m_ObjectHideFlags: 0

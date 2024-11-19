@@ -31,6 +31,11 @@ public class PlayerInstance : MonoBehaviour
         playerStats.currentHealth -= damage;
     }
 
+    public void HealPlayer(float damage)
+    {
+        playerStats.currentHealth += damage;
+    }
+
     public void KillPlayer()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);

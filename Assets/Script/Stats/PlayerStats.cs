@@ -10,11 +10,22 @@ public class PlayerStats : CharacterStats
     public bool isStun = false;
     public bool isBurn = false;
 
+    protected override void Start()
+    {
+        base.Start();
+        damage = 1;
+    }
+
     private void Update()
     {
         if (currentHealth <= 0)
         {
             Die();
+        }
+
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
         }
         
         if (isSlow)

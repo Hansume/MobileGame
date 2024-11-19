@@ -7,8 +7,8 @@ public class EnemiesController : MonoBehaviour
     public float skillCooldown;
     private float skillTimer;
 
-    protected bool canMove;
-    protected bool canAttack;
+    protected bool canMove = true;
+    protected bool canAttack = true;
 
     public Vector2 attackRange;
     public Vector2 skillRange;
@@ -35,8 +35,6 @@ public class EnemiesController : MonoBehaviour
         playerTransform = playerInstance.gameObject.transform;
 
         skillTimer = skillCooldown;
-        canMove = true;
-        canAttack = true;
     }
 
     protected virtual void Update()
@@ -108,7 +106,7 @@ public class EnemiesController : MonoBehaviour
 
     protected virtual void BasicDamage()
     {
-        playerInstance.DamagePlayer(1);
+        playerInstance.DamagePlayer(characterStats.damage);
     }
     #endregion
 
@@ -137,14 +135,9 @@ public class EnemiesController : MonoBehaviour
 
     protected virtual void SkillDamage()
     {
-        playerInstance.DamagePlayer(2);
+        playerInstance.DamagePlayer(characterStats.damage);
     }
     #endregion
-
-    protected virtual IEnumerator StatusEffects(float time)
-    {
-        yield return new WaitForSeconds(time);
-    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -152,7 +145,8 @@ public class EnemiesController : MonoBehaviour
         {
             if (characterStats.canHit)
             {
-                characterStats.TakeDamage(1);
+                characterStats.TakeDamage(playerInstance.playerStats.damage);
+                playerInstance.HealPlayer(playerInstance.playerStats.damage);
             }
         }
     }

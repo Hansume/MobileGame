@@ -24656,6 +24656,7 @@ GameObject:
   - component: {fileID: 623707776}
   - component: {fileID: 623707775}
   - component: {fileID: 623707774}
+  - component: {fileID: 623707777}
   m_Layer: 5
   m_Name: A
   m_TagString: Untagged
@@ -24725,19 +24726,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 623707775}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1012006894227905752}
-        m_TargetAssemblyTypeName: PlayerInteract, Assembly-CSharp
-        m_MethodName: Interact
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &623707775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24776,6 +24765,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 623707772}
   m_CullTransparentMesh: 1
+--- !u!114 &623707777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 623707772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1012006894227905752}
+          m_TargetAssemblyTypeName: PlayerInteract, Assembly-CSharp
+          m_MethodName: Interact
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1001 &629713599
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26548,7 +26566,7 @@ MonoBehaviour:
   bossPrefab: {fileID: 6193139314001035912, guid: 9ed85b0ea20c40e439d72fdcdb39ec27,
     type: 3}
   bossEntrance: {fileID: 285939652}
-  gemPrefab: {fileID: 6957935765215401646, guid: 5cee87e950448a143b57d38f2deea403,
+  chestPrefab: {fileID: 2055102311959635369, guid: 99597c7b4aa47494fb2b6061505735da,
     type: 3}
   firePositions:
   - {fileID: 1723214560156644658}
@@ -29028,6 +29046,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PF Gate T1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6644944589867386885, guid: 4be821d0b78ad5043985b57b738e951b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -73723,7 +73746,7 @@ Transform:
   m_GameObject: {fileID: 1622224629}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.7, y: -0.3, z: 0}
+  m_LocalPosition: {x: -1.49, y: -0.64, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -76952,13 +76975,14 @@ GameObject:
   - component: {fileID: 1873011393}
   - component: {fileID: 1873011392}
   - component: {fileID: 1873011391}
+  - component: {fileID: 1873011394}
   m_Layer: 5
   m_Name: X
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1873011390
 RectTransform:
   m_ObjectHideFlags: 0
@@ -77021,19 +77045,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1873011392}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1873011392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77072,6 +77084,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1873011389}
   m_CullTransparentMesh: 1
+--- !u!114 &1873011394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1873011389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1622224634}
+          m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+          m_MethodName: Dash
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1001 &1899773001
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -79891,9 +79932,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7953c87594d7ed469eec870c2029b7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 20
+  maxHealth: 50
   currentHealth: 0
   moveSpeed: 2
+  damage: 0
   canHit: 1
   isDead: 0
   isSlow: 0
@@ -80696,12 +80738,12 @@ PrefabInstance:
     - target: {fileID: 2055102311959635375, guid: 99597c7b4aa47494fb2b6061505735da,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.994189
+      value: 3.07
       objectReference: {fileID: 0}
     - target: {fileID: 2055102311959635375, guid: 99597c7b4aa47494fb2b6061505735da,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.29
+      value: 0.31
       objectReference: {fileID: 0}
     - target: {fileID: 2055102311959635375, guid: 99597c7b4aa47494fb2b6061505735da,
         type: 3}
