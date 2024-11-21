@@ -5,16 +5,15 @@ using UnityEngine;
 public class EnemiesController : MonoBehaviour
 {
     public float skillCooldown;
-    private float skillTimer;
+    protected float skillTimer;
 
-    protected bool canMove = true;
-    protected bool canAttack = true;
+    protected bool canAttack = false;
+    private bool playerFound = false;
 
     public Vector2 attackRange;
     public Vector2 skillRange;
 
     public Transform center;
-    private Transform playerTransform;
     private Collider2D[] colliders2D;
 
     protected PlayerInstance playerInstance;
@@ -32,7 +31,6 @@ public class EnemiesController : MonoBehaviour
         characterStats = GetComponent<CharacterStats>();
 
         playerInstance = PlayerInstance.instance;
-        playerTransform = playerInstance.gameObject.transform;
 
         skillTimer = skillCooldown;
     }
@@ -43,20 +41,29 @@ public class EnemiesController : MonoBehaviour
 
         if (!characterStats.isDead)
         {
-            if (canMove)
+            if (state == enemyState.Run)
             {
                 Movement();
             }
 
-            if (canAttack)
-            {
-                BasicAttack();
-            }
-
             skillTimer -= Time.deltaTime;
-            if (skillTimer < 0)
+            if (skillTimer > 0)
             {
-                SkillAttack();
+                PerformAttack(attackRange);
+                if (canAttack)
+                {
+                    state = enemyState.Attack;
+                    canAttack = false;
+                }
+            }
+            else
+            {
+                PerformAttack(skillRange);
+                if (canAttack)
+                {
+                    state = enemyState.Attack2;
+                    canAttack = false;
+                }
             }
         }
         else
@@ -69,6 +76,7 @@ public class EnemiesController : MonoBehaviour
     private void Movement()
     {
         Vector3 targetPosition;
+        Transform playerTransform = playerInstance.gameObject.transform;
 
         if (transform.position.x >= playerTransform.position.x)
         {
@@ -84,58 +92,61 @@ public class EnemiesController : MonoBehaviour
         transform.position = Vector2.MoveTowards(transform.position, targetPosition, GetComponent<CharacterStats>().moveSpeed * Time.deltaTime);
     }
 
-    #region basicAttack
-    private void BasicAttack()
+    private void PerformAttack(Vector2 range)
     {
-        colliders2D = Physics2D.OverlapBoxAll(center.position, attackRange, 0);
+        playerFound = false;
+
+        colliders2D = Physics2D.OverlapBoxAll(center.position, range, 0);
         foreach (Collider2D playerCollider in colliders2D)
         {
             if (playerCollider.gameObject.tag == "Player")
             {
-                state = enemyState.Attack;
-                canMove = false;
+                playerFound = true;
+                canAttack = true;
+                break;
             }
+        }
+
+        if (!playerFound)
+        {
+            canAttack = false;
         }
     }
 
+    #region basicAttack
     private void ResetAttack()
     {
         state = enemyState.Run;
-        canMove = true;
     }
 
     protected virtual void BasicDamage()
     {
-        playerInstance.DamagePlayer(characterStats.damage);
+        if (playerFound)
+        {
+            playerInstance.DamagePlayer(characterStats.damage);
+        }
     }
     #endregion
 
     #region SkillAttack
-    protected virtual void SkillAttack()
-    {
-        colliders2D = Physics2D.OverlapBoxAll(center.position, skillRange, 0);
-        foreach (Collider2D playerCollider in colliders2D)
-        {
-            if (playerCollider.gameObject.tag == "Player")
-            {
-                canMove = false;
-                canAttack = false;
-                state = enemyState.Attack2;
-            }
-        }
-    }
-
     private void ResetSkill()
     {
         state = enemyState.Run;
-        canMove = true;
-        canAttack = true;
         skillTimer = skillCooldown;
     }
 
     protected virtual void SkillDamage()
     {
-        playerInstance.DamagePlayer(characterStats.damage);
+        if (playerFound)
+        {
+            playerInstance.DamagePlayer(characterStats.damage);
+            Effects();
+        }
+    }
+
+    protected virtual void Effects()
+    {
+
     }
     #endregion
 

@@ -217,7 +217,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillCooldown: 0
-  attackRange: {x: 22, y: 1.5}
-  skillRange: {x: 0, y: 0}
+  attackRange: {x: 0, y: 0}
+  skillRange: {x: 22, y: 1.5}
   center: {fileID: 3810237112999095982}
   state: 0

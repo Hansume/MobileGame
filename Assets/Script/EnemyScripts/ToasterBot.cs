@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class ToasterBot : EnemiesController
 {
-    //Burning
-    protected override void BasicDamage()
+    //Burn
+    protected override void Effects()
     {
-        base.BasicDamage();
         float burnRate = Random.value;
         if (burnRate <= 0.2f)
         {

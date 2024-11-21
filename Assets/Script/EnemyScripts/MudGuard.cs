@@ -5,9 +5,8 @@ using UnityEngine;
 public class MudGuard : EnemiesController
 {
     //Slow Moving Speed
-    protected override void SkillDamage()
+    protected override void Effects()
     {
-        base.SkillDamage();
         playerInstance.playerStats.isSlow = true;
     }
 }

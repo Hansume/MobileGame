@@ -17,7 +17,6 @@ public class DungeonSpawning : MonoBehaviour
     protected bool inBound = false;
     private Vector2 center;
     private Vector3 size;
-
     private Bounds areaBounds;
     private void Start()
     {

@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class BossController: EnemiesController
 {
-    private float timer;
     private bool canCount = false;
     private bool phaseTwo = false;
     public bool canFire = false;
@@ -12,7 +11,7 @@ public class BossController: EnemiesController
     protected override void Start()
     {
         base.Start();
-        timer = skillCooldown;
+        skillTimer = skillCooldown;
     }
 
     protected override void Update()
@@ -22,7 +21,6 @@ public class BossController: EnemiesController
         if (characterStats.currentHealth <= (characterStats.maxHealth / 2) && !phaseTwo)
         {
             phaseTwo = true;
-            canMove = false;
             canAttack = false;
             characterStats.canHit = false;
             animator.SetTrigger("activatePhaseTwo");
@@ -30,12 +28,11 @@ public class BossController: EnemiesController
 
         if (canCount)
         {
-            timer -= Time.deltaTime;
-            if (timer < 0 && canCount)
+            skillTimer -= Time.deltaTime;
+            if (skillTimer < 0 && canCount)
             {
-                canMove = false;
-                canAttack = false;
                 state = enemyState.Attack2;
+                canAttack = false;
             }
         }
     }
@@ -62,8 +59,7 @@ public class BossController: EnemiesController
     private void Reset()
     {
         characterStats.canHit = true;
-        timer = skillCooldown;
-        canMove = true;
+        skillTimer = skillCooldown;
         canAttack = true;
         canCount = true;
         animator.ResetTrigger("activatePhaseTwo");

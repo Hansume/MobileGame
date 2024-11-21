@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class BallAndChain : EnemiesController
 {
-    //Stun (Disable Movement)
-    protected override void BasicDamage()
+    //Root (Disable Movement)
+    protected override void Effects()
     {
-        base.BasicDamage();
         float stunRate = Random.value;
-        if (stunRate <= 0.2f){
+        if (stunRate <= 0.2f)
+        {
             playerInstance.playerStats.isStun = true;
         }
     }
