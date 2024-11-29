@@ -1,9 +1,5 @@
 ﻿using System.Collections;
-using System.Runtime.CompilerServices;
-using System.Threading;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class PlayerMovement : MonoBehaviour
 {

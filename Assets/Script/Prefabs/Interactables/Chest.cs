@@ -1,14 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Chest : Interactables
 {
     [SerializeField] private GameObject gemPrefab;
+    private bool isInstantiated = false;
 
     public override void Interact()
     {
         base.Interact();
-        GameObject gem = Instantiate(gemPrefab, transform.position + new Vector3(3, 0, 0), Quaternion.identity);
+        if (!isInstantiated)
+        {
+            GameObject gem = Instantiate(gemPrefab, transform.position + new Vector3(1, 0.5f, 0), Quaternion.identity);
+            isInstantiated = true;
+        }
     }
 }

@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Interactables : MonoBehaviour
+public class Interactables : MonoBehaviour, IInteract
 {
     private Animator animator;
     private bool isInteracted = false;

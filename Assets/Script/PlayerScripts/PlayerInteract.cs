@@ -19,7 +19,7 @@ public class PlayerInteract : MonoBehaviour
         interactables = Physics2D.OverlapCircle(transform.position, radius, interactablesLayer);
         if (interactables == null && prevInteractables != null)
         {
-            prevInteractables.GetComponent<Interactables>().ResetInteract();
+            prevInteractables.GetComponent<IInteract>().ResetInteract();
         }
     }
 
@@ -28,7 +28,7 @@ public class PlayerInteract : MonoBehaviour
         if (interactables != null)
         {
             prevInteractables = interactables;
-            interactables.GetComponent<Interactables>().Interact();
+            interactables.GetComponent<IInteract>().Interact();
         }
     }
 
