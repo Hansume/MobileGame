@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7947911505737750448}
   - component: {fileID: 7947911505737750450}
-  - component: {fileID: 7947911505737750449}
+  - component: {fileID: 4390038297360794423}
   m_Layer: 20
   m_Name: PF Props Stone T6
   m_TagString: Untagged
@@ -86,8 +86,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!61 &7947911505737750449
-BoxCollider2D:
+--- !u!60 &4390038297360794423
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -118,7 +118,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.016160384, y: 0.2351656}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
@@ -128,9 +128,18 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.7490419, y: 0.33933854}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.123799324, y: 0.8061695}
+      - {x: -0.38491154, y: 0.38876772}
+      - {x: -0.37810993, y: 0.19507074}
+      - {x: -0.3020439, y: 0.049554825}
+      - {x: -0.16648674, y: 0.04032421}
+      - {x: 0.06500912, y: 0.026883125}
+      - {x: 0.40171337, y: 0.26949596}
+      - {x: 0.40171146, y: 0.49058533}
+      - {x: 0.18749046, y: 0.8081517}
+  m_UseDelaunayMesh: 0
 --- !u!1 &7947911505844789836
 GameObject:
   m_ObjectHideFlags: 0

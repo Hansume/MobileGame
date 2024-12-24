@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f0763c77e74c124aa7f801f01326e31, type: 3}
+  m_Name: InitialDialogue
+  m_EditorClassIdentifier: 
+  dialogue:
+  - Ho... ho... ho... Hello young man!
+  - You may wonder why you are here.
+  - Well... You are the chosen one. Don't worry, you can still go back after you
+    have completed all the challenges and proved yourself.
+  - You know, nowadays every man has to be strong, smart and ambitous.
+  - First of all, face every challenge and walk the path toward success with unwavering
+    resolve. (Defeat enemies in dungeon)
+  - Secondly, push the stone, heavy and unyielding, until it rests where three pillars
+    stand. (Push the block to the platform between three pillars)
+  - Lastly, climb to the highest point, where the sky kisses the earth. It is a testament
+    to the ambition that drives every soul. (Interact with the statue)
+  - Now go and prove yourself, young man. Show that you are strong of body, wise
+    of mind, and driven by ambition!

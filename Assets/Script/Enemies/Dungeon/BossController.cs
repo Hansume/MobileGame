@@ -34,7 +34,6 @@ public class BossController: EnemiesController
                 canCount = false;
                 canAttack = false;
             }
-            Debug.Log(skillTimer);
         }
     }
 

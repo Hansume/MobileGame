@@ -7,12 +7,21 @@ public class DialogueUI : MonoBehaviour
     [SerializeField] private GameObject dialogueBox;
     [SerializeField] private TMP_Text textLabel;
     [SerializeField] private float displaySpeed;
-    [SerializeField] private DialogueObject dialogueObject;
+    [SerializeField] private DialogueObject initialDialogue;
+    [SerializeField] private DialogueObject finalDialogue;
 
     private void OnEnable()
     {
-        StartCoroutine(StepThroughDiablogue(dialogueObject));
+        if (!GemCount.instance.lastBoss)
+        {
+            StartCoroutine(StepThroughDiablogue(initialDialogue));
+        }
+        else
+        {
+            StartCoroutine(StepThroughDiablogue(finalDialogue));
+        }
     }
+
     private IEnumerator StepThroughDiablogue (DialogueObject dialogueObject)
     {
         foreach (string dialogue in dialogueObject.Dialogue)
@@ -24,7 +33,7 @@ public class DialogueUI : MonoBehaviour
         CloseDialogue();
     }
 
-    private void CloseDialogue ()
+    public void CloseDialogue()
     {
         dialogueBox.SetActive(false);
         textLabel.text = string.Empty;

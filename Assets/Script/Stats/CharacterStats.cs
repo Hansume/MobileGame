@@ -25,6 +25,15 @@ public class CharacterStats : MonoBehaviour
         }
     }
 
+    public void Heal(int healAmount)
+    {
+        currentHealth += healAmount;
+        if (currentHealth >= maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+    }
+
     protected virtual void Die()
     {
         

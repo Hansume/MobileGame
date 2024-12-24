@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SecondForm
+  m_Controller: {fileID: 9100000, guid: 3a795d46d9019604ab645b0d2c6bd65c, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 3a1097514bc555b4f94494d9091a4f4f, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: ed0118b75db145a41ac06cc5065ab9d8, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: b7dd3a132e5133e4e8487b947735c94b, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 7eb49dbdce8f93649ac8d1497dc1f008, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 59f17ccb38ed7614599e46b062143493, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 24992d07ac640b34e8a2a45b13e67277, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: c1b68d481a61ff7478b941677196508e, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 1ecf04165bcf3dc4eb6f27e337eba5d8, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 916c1f5f48a0873469ecdc5bb8aaa966, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 988ce4a17c41d19488541c4ed5c85940, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: e99969a98fcaa5948bbfc1d3681cf4af, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: a18323317f60538488ec4b589c42c611, type: 2}

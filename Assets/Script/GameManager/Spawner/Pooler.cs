@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Pooler : MonoBehaviour
 {
+    [SerializeField] private GameObject poolParent;
+
     [System.Serializable]
     public class Pool
     {
@@ -34,6 +36,7 @@ public class Pooler : MonoBehaviour
             for (int i = 0; i < pool.size; i++)
             {
                 GameObject obj = Instantiate(pool.prefab);
+                obj.transform.SetParent(poolParent.transform);
                 obj.SetActive(false);
                 objectPool.Enqueue(obj);
             }

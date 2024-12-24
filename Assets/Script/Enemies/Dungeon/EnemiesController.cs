@@ -15,7 +15,7 @@ public class EnemiesController : MonoBehaviour
     private Collider2D[] colliders2D;
 
     protected PlayerInstance playerInstance;
-    private SpriteRenderer spriteRenderer;
+    protected SpriteRenderer spriteRenderer;
     protected Animator animator;
     protected CharacterStats characterStats;
 
@@ -66,8 +66,7 @@ public class EnemiesController : MonoBehaviour
         }
         else
         {
-            state = enemyState.Death;
-            GetComponent<Collider2D>().enabled = false;
+            Die();
         }
     }
 
@@ -79,12 +78,12 @@ public class EnemiesController : MonoBehaviour
         if (transform.position.x >= playerTransform.position.x)
         {
             spriteRenderer.flipX = true;
-            targetPosition = playerTransform.position + new Vector3(1.5f, .5f, 0);
+            targetPosition = playerTransform.position + new Vector3(1.5f, 0, 0);
         }
         else
         {
             spriteRenderer.flipX = false;
-            targetPosition = playerTransform.position + new Vector3(-1.5f, .5f, 0);
+            targetPosition = playerTransform.position + new Vector3(-1.5f, 0, 0);
         }
 
         transform.position = Vector2.MoveTowards(transform.position, targetPosition, GetComponent<CharacterStats>().moveSpeed * Time.deltaTime);
@@ -111,7 +110,7 @@ public class EnemiesController : MonoBehaviour
         }
     }
 
-    #region basicAttack
+    #region BasicAttack
     private void ResetAttack()
     {
         state = enemyState.Run;
@@ -127,17 +126,18 @@ public class EnemiesController : MonoBehaviour
     #endregion
 
     #region SkillAttack
-    private void ResetSkill()
+    protected virtual void ResetSkill()
     {
         state = enemyState.Run;
         skillTimer = skillCooldown;
     }
 
-    protected virtual void SkillDamage()
+    protected virtual void SkillDamage(int damage)
     {
+        damage = characterStats.damage;
         if (playerFound)
         {
-            playerInstance.DamagePlayer(characterStats.damage);
+            playerInstance.DamagePlayer(damage);
             Effects();
         }
     }
@@ -148,7 +148,7 @@ public class EnemiesController : MonoBehaviour
     }
     #endregion
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Arrow")
         {
@@ -158,6 +158,12 @@ public class EnemiesController : MonoBehaviour
                 playerInstance.HealPlayer(playerInstance.playerStats.damage);
             }
         }
+    }
+
+    private void Die()
+    {
+        state = enemyState.Death;
+        GetComponent<Collider2D>().enabled = false;
     }
 
     private void OnDrawGizmosSelected()

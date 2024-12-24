@@ -23,9 +23,9 @@ public class BossSpawning : DungeonSpawning
 
         if (dungeonEnemies == 0 && inBound)
         {
-            bossEntrance.SetActive(true);
             if (!bossSpawned)
             {
+                bossEntrance.SetActive(true);
                 StartCoroutine(SpawnBoss());
                 bossSpawned = true;
             }
@@ -45,6 +45,7 @@ public class BossSpawning : DungeonSpawning
             {
                 Instantiate(chestPrefab, transform.position, Quaternion.identity);
                 bossEntrance.SetActive(false);
+                bossHealthbar.gameObject.SetActive(false);
                 bossGameobject = null;
             }
         }
