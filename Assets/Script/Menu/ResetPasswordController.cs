@@ -18,7 +18,7 @@ public class ResetPasswordController : MonoBehaviour
     public Button btnSubmit;
     public Button btnBack;
     public TMP_Text messageText;
-    private const string endpoint = "26.123.150.88:8080/api/auth/reset-password";
+    private const string endpoint = "http://26.123.150.88:8080/api/auth/reset-password";
 
     // Start is called before the first frame update
     private void Start()

@@ -30,7 +30,7 @@ public class HistoryController : MonoBehaviour
 
     [SerializeField] private float fadeInDuration = 0.5f;
 
-    private string baseApiUrl = "localhost:8080/api/game/history/";
+    private string baseApiUrl = "http://26.123.150.88:8080/api/game/history/";
     private string API_URL;
 
     private void Start()
@@ -46,7 +46,7 @@ public class HistoryController : MonoBehaviour
     private void OnEnable()
     {
         int userId = PlayerPrefs.GetInt("UserId");
-        baseApiUrl = "localhost:8080/api/game/history/" + userId;
+        baseApiUrl = "http://26.123.150.88:8080/api/game/history/" + userId;
         API_URL = baseApiUrl;
         FetchRankingData();
     }

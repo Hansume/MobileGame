@@ -47,7 +47,7 @@ public class RankingController : MonoBehaviour
 
     private string GetApiUrl(int level)
     {
-        return $"http://localhost:8080/api/game/ranking?level={level}";
+        return $"http://26.123.150.88:8080/api/game/ranking?level={level}";
     }
 
     //private void OnEnable()
