@@ -15,12 +15,10 @@ public class DashboardController : MonoBehaviour
     public GameObject loginView;
     public GameObject rankingView;
     public GameObject historyView;
+    public GameObject changePasswordView;
 
     private void Start()
     {
-        string username = PlayerPrefs.GetString("Username");
-        txtUsername.text = username;
-
         btnPlay.onClick.AddListener(() =>
         {
             SceneManager.LoadScene("MainScene");
@@ -28,8 +26,12 @@ public class DashboardController : MonoBehaviour
 
         btnLogout.onClick.AddListener(() =>
         {
+            Debug.Log("Before DeleteAll - Username: " + PlayerPrefs.GetString("Username"));
+
             PlayerPrefs.DeleteAll();
             PlayerPrefs.Save();
+
+            Debug.Log("After DeleteAll - Username: " + PlayerPrefs.GetString("Username"));
             loginView.SetActive(true);
             gameObject.SetActive(false);
         });
@@ -45,5 +47,22 @@ public class DashboardController : MonoBehaviour
             historyView.SetActive(true);
             gameObject.SetActive(false);
         });
+
+        btnChangePassword.onClick.AddListener(() =>
+        {
+            changePasswordView.SetActive(true);
+            gameObject.SetActive(false);
+        });
+
+        btnQuit.onClick.AddListener(() =>
+        {
+            Application.Quit();
+        });
+    }
+
+    private void OnEnable()
+    {
+        string username = PlayerPrefs.GetString("Username");
+        txtUsername.text = username;
     }
 }

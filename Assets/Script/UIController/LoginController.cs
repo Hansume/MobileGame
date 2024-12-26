@@ -17,7 +17,7 @@ public class LoginController : MonoBehaviour
     public Button btnLogin;
     public Button btnRegister;
     public Button btnForgotPassword;
-    private const string endpoint = "http://localhost:8080/api/auth/login";
+    private const string endpoint = "http://26.123.150.88:8080/api/auth/login";
 
     private void Start()
     {
@@ -74,36 +74,35 @@ public class LoginController : MonoBehaviour
 
         yield return request.SendWebRequest();
 
-        if (request.result != UnityWebRequest.Result.Success)
+        if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
         {
-            ShowMessage("Connection error: " + request.error, Color.red);
-            Debug.LogError("Connection error: " + request.error);
+            Debug.LogError("Error: " + request.error);
+        }
+
+        string response = request.downloadHandler.text;
+        Debug.Log("Response: " + response);
+
+        ApiResponse<AuthenticationResponse> apiResponse = JsonUtility.FromJson<ApiResponse<AuthenticationResponse>>(response);
+
+        if (apiResponse.success)
+        {
+            PlayerPrefs.SetInt("UserId", (int)apiResponse.data.User.id);
+            PlayerPrefs.SetString("Username", apiResponse.data.User.username);
+            PlayerPrefs.SetString("Email", apiResponse.data.User.email);
+            PlayerPrefs.Save();
+
+            Debug.Log("UserId: " + PlayerPrefs.GetString("UserId"));
+
+            ShowMessage("Login successful!", Color.green);
+
+            dashboard.SetActive(true);
+            Reset();
+            gameObject.SetActive(false);
         }
         else
         {
-            string response = request.downloadHandler.text;
-            Debug.Log("Response: " + response);
-
-            ApiResponse<AuthenticationResponse> apiResponse = JsonUtility.FromJson<ApiResponse<AuthenticationResponse>>(response);
-
-            if (apiResponse.success)
-            {
-                PlayerPrefs.SetInt("UserId", (int)apiResponse.data.User.id);
-                PlayerPrefs.SetString("Username", apiResponse.data.User.username);
-                PlayerPrefs.SetString("Email", apiResponse.data.User.email);
-                PlayerPrefs.Save();
-
-                ShowMessage("Login successful!", Color.green);
-
-                dashboard.SetActive(true);
-                Reset();
-                gameObject.SetActive(false);
-            }
-            else
-            {
-                ShowMessage("Login failed: " + apiResponse.message, Color.red);
-                Debug.LogError("Login failed: " + apiResponse.message);
-            }
+            ShowMessage("Login failed: " + apiResponse.message, Color.red);
+            Debug.LogError("Login failed: " + apiResponse.message);
         }
 
         btnLogin.interactable = true;

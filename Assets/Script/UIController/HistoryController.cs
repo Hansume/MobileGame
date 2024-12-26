@@ -10,6 +10,8 @@ public class HistoryController : MonoBehaviour
 {
     public GameObject dashboardView;
     public Button btnDashboard;
+    public TMP_Dropdown levelDropdown;
+    public TMP_Dropdown criteriaDropdown;
 
     [Header("UI References")]
     [SerializeField] private GameObject rankingItemPrefab;
@@ -28,19 +30,67 @@ public class HistoryController : MonoBehaviour
 
     [SerializeField] private float fadeInDuration = 0.5f;
 
-    private string API_URL = "localhost:8080/api/game/history/";
+    private string baseApiUrl = "localhost:8080/api/game/history/";
+    private string API_URL;
 
     private void Start()
     {
-        int userId = PlayerPrefs.GetInt("UserId");
-        API_URL += userId;
-        FetchRankingData();
-
+        levelDropdown.gameObject.SetActive(false);
         btnDashboard.onClick.AddListener(() =>
         {
             dashboardView.SetActive(true);
             gameObject.SetActive(false);
         });
+    }
+
+    private void OnEnable()
+    {
+        int userId = PlayerPrefs.GetInt("UserId");
+        baseApiUrl = "localhost:8080/api/game/history/" + userId;
+        API_URL = baseApiUrl;
+        FetchRankingData();
+    }
+
+    public void OnCriteriaChanged(int index)
+    {
+        API_URL = baseApiUrl;
+        if (index == 0)
+        {
+            API_URL += "?type=true";
+            Debug.Log("API_URL before fetching api: " + API_URL);
+            levelDropdown.gameObject.SetActive(false);
+            FetchRankingData();
+        }
+        else
+        {
+            API_URL += "?type=false&level=1";
+            Debug.Log("API_URL before fetching api: " + API_URL);
+            FetchRankingData();
+            levelDropdown.gameObject.SetActive(true);
+        }
+    }
+
+    public void OnLevelChanged(int index)
+    {
+        API_URL = baseApiUrl + "?type=false";
+        if (index == 0)
+        {
+            API_URL += "&level=1";
+            Debug.Log("API_URL before fetching api: " + API_URL);
+            FetchRankingData();
+        }
+        else if (index == 1)
+        {
+            API_URL += "&level=2";
+            Debug.Log("API_URL before fetching api: " + API_URL);
+            FetchRankingData();
+        }
+        else if (index == 2)
+        {
+            API_URL += "&level=3";
+            Debug.Log("API_URL before fetching api: " + API_URL);
+            FetchRankingData();
+        }
     }
 
     private void FetchRankingData()
@@ -108,7 +158,6 @@ public class HistoryController : MonoBehaviour
         deathText.text = $"{rank.death} deaths";
         createdDateText.text = FormatCreatedDate(rank.createdAt);
 
-        // Set color based on ranking
         Color rankColor = position switch
         {
             1 => firstPlaceColor,
@@ -117,17 +166,15 @@ public class HistoryController : MonoBehaviour
             _ => defaultColor
         };
 
-        // Apply color to rank number
         rankText.color = rankColor;
 
-        // Add highlight effect for top 3
         if (position <= 3)
         {
             Image background = item.GetComponent<Image>();
             if (background != null)
             {
                 Color bgColor = rankColor;
-                bgColor.a = 0.1f; // Subtle background
+                bgColor.a = 0.1f;
                 background.color = bgColor;
             }
         }

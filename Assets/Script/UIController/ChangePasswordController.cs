@@ -55,7 +55,7 @@ public class ChangePasswordController : MonoBehaviour
     public class ChangePasswordReq
     {
         public long userId;
-        public string password;
+        public string oldPassword;
         public string newPassword;
         public string confirmPassword;
     }
@@ -66,7 +66,7 @@ public class ChangePasswordController : MonoBehaviour
         var changePasswordData = new ChangePasswordReq
         {
             userId = (int)userId,
-            password = password,
+            oldPassword = password,
             newPassword = newPassword,
             confirmPassword = confirmPassword
         };
@@ -80,22 +80,15 @@ public class ChangePasswordController : MonoBehaviour
 
         yield return request.SendWebRequest();
 
-        if (request.result != UnityWebRequest.Result.Success)
+        string response = request.downloadHandler.text;
+        ApiResponse<string> apiResponse = JsonUtility.FromJson<ApiResponse<string>>(response);
+        if (apiResponse.success)
         {
-            ShowMessage("Connection error: " + request.error, Color.red);
-            Debug.LogError("Connection error: " + request.error);
+            ShowMessage("Password changed successfully", Color.green);
         }
         else
         {
-            string response = request.downloadHandler.text;
-            if (response.Contains("success"))
-            {
-                ShowMessage("Password changed successfully", Color.green);
-            }
-            else
-            {
-                ShowMessage("Failed to change password", Color.red);
-            }
+            ShowMessage(apiResponse.message, Color.red);
         }
     }
 

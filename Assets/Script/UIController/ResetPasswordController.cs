@@ -70,28 +70,20 @@ public class ResetPasswordController : MonoBehaviour
 
         yield return request.SendWebRequest();
 
-        if (request.result != UnityWebRequest.Result.Success)
+        string response = request.downloadHandler.text;
+        Debug.Log("Response: " + response);
+        ApiResponse<string> apiResponse = JsonUtility.FromJson<ApiResponse<string>>(response);
+        if (apiResponse.success)
         {
-            ShowMessage("Connection error: " + request.error, Color.red);
-            Debug.LogError("Connection error: " + request.error);
+            ShowMessage("Reset password successfully!", Color.green);
+            loginView.SetActive(true);
+            Reset();
+            gameObject.SetActive(false);
         }
         else
         {
-            string response = request.downloadHandler.text;
-            Debug.Log("Response: " + response);
-            ApiResponse<string> apiResponse = JsonUtility.FromJson<ApiResponse<string>>(response);
-            if (apiResponse.success)
-            {
-                ShowMessage("Reset password successfully!", Color.green);
-                loginView.SetActive(true);
-                Reset();
-                gameObject.SetActive(false);
-            }
-            else
-            {
-                ShowMessage("Reset password failed: " + apiResponse.message, Color.red);
-                Debug.LogError("Reset password failed: " + apiResponse.message);
-            }
+            ShowMessage("Reset password failed: " + apiResponse.message, Color.red);
+            Debug.LogError("Reset password failed: " + apiResponse.message);
         }
     }
 

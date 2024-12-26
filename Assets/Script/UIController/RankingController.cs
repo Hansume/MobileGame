@@ -10,6 +10,7 @@ public class RankingController : MonoBehaviour
 {
     public GameObject dashboardView;
     public Button btnDashboard;
+    public TMP_Dropdown dropdown;
 
     [Header("UI References")]
     [SerializeField] private GameObject rankingItemPrefab;
@@ -32,25 +33,55 @@ public class RankingController : MonoBehaviour
 
     private void Start()
     {
-        FetchRankingData();
+        //dropdown.onValueChanged.AddListener(OnLevelChanged);
 
         btnDashboard.onClick.AddListener(() =>
         {
             dashboardView.SetActive(true);
             gameObject.SetActive(false);
         });
+
+        dropdown.value = 0;
+        OnLevelChanged(0);
     }
 
-    private void FetchRankingData()
+    private string GetApiUrl(int level)
     {
-        StartCoroutine(GetRankingData());
+        return $"http://localhost:8080/api/game/ranking?level={level}";
     }
 
-    private IEnumerator GetRankingData()
+    //private void OnEnable()
+    //{
+    //    FetchRankingData();
+    //}
+
+    public void OnLevelChanged(int index)
+    {
+        //Debug.Log($"Dropdown index changed: {index}");
+        //dropdown.value = index;
+        //int level = index + 1;
+        //Debug.Log($"Selected Level: {level}");
+        //StartCoroutine(GetRankingData(level));
+        dropdown.value = index;
+        if (index == 0)
+        {
+            StartCoroutine(GetRankingData(1));
+        }
+        else if (index == 1)
+        {
+            StartCoroutine(GetRankingData(2));
+        }
+        else if (index == 2)
+        {
+            StartCoroutine(GetRankingData(3));
+        }
+    }
+
+    private IEnumerator GetRankingData(int level)
     {
         ClearCurrentRanking();
 
-        using (UnityWebRequest www = UnityWebRequest.Get(API_URL))
+        using (UnityWebRequest www = UnityWebRequest.Get(GetApiUrl(level)))
         {
             yield return www.SendWebRequest();
 
@@ -90,21 +121,6 @@ public class RankingController : MonoBehaviour
         }
     }
 
-    //private IEnumerator FadeInItem(CanvasGroup canvasGroup)
-    //{
-    //    float elapsedTime = 0f;
-
-    //    while (elapsedTime < fadeInDuration)
-    //    {
-    //        elapsedTime += Time.deltaTime;
-    //        float alpha = elapsedTime / fadeInDuration;
-    //        canvasGroup.alpha = alpha;
-    //        yield return null;
-    //    }
-
-    //    canvasGroup.alpha = 1f;
-    //}
-
     private void SetupRankItem(GameObject item, History rank, int position)
     {
         TextMeshProUGUI rankText = item.transform.Find("RankText").GetComponent<TextMeshProUGUI>();
@@ -121,7 +137,6 @@ public class RankingController : MonoBehaviour
         deathText.text = $"{rank.death} deaths";
         createdDateText.text = FormatCreatedDate(rank.createdAt);
 
-        // Set color based on ranking
         Color rankColor = position switch
         {
             1 => firstPlaceColor,
@@ -130,17 +145,15 @@ public class RankingController : MonoBehaviour
             _ => defaultColor
         };
 
-        // Apply color to rank number
         rankText.color = rankColor;
 
-        // Add highlight effect for top 3
         if (position <= 3)
         {
             Image background = item.GetComponent<Image>();
             if (background != null)
             {
                 Color bgColor = rankColor;
-                bgColor.a = 0.1f; // Subtle background
+                bgColor.a = 0.1f;
                 background.color = bgColor;
             }
         }

@@ -109,27 +109,19 @@ public class RegisterController : MonoBehaviour
 
         yield return request.SendWebRequest();
 
-        if (request.result != UnityWebRequest.Result.Success)
+        string response = request.downloadHandler.text;
+        Debug.Log("Response: " + response);
+
+        ApiResponse<AuthenticationResponse> apiResponse = JsonUtility.FromJson<ApiResponse<AuthenticationResponse>>(response);
+
+        if (apiResponse.success)
         {
-            ShowMessage(request.error, Color.red);
-            Debug.LogError("Connection error: " + request.error);
+            ShowMessage("Registration successful!", Color.green);
         }
         else
         {
-            string response = request.downloadHandler.text;
-            Debug.Log("Response: " + response);
-
-            ApiResponse<AuthenticationResponse> apiResponse = JsonUtility.FromJson<ApiResponse<AuthenticationResponse>>(response);
-
-            if (apiResponse.success)
-            {
-                ShowMessage("Registration successful!", Color.green);
-            }
-            else
-            {
-                ShowMessage("Registration failed: " + apiResponse.message, Color.red);
-                Debug.LogError("Registration failed: " + apiResponse.message);
-            }
+            ShowMessage("Registration failed: " + apiResponse.message, Color.red);
+            Debug.LogError("Registration failed: " + apiResponse.message);
         }
 
         btnRegister.interactable = true;
