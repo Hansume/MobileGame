@@ -201,6 +201,7 @@ MonoBehaviour:
   maxHealth: 3
   currentHealth: 0
   moveSpeed: 1.5
+  damage: 1
   canHit: 1
   isDead: 0
 --- !u!114 &-8538691099301488502
@@ -216,7 +217,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillCooldown: 0
-  attackRange: {x: 22, y: 1.5}
-  skillRange: {x: 0, y: 0}
+  attackRange: {x: 0, y: 0}
+  skillRange: {x: 22, y: 1.5}
   center: {fileID: 3810237112999095982}
   state: 0

@@ -1,6 +1,5 @@
-﻿using UnityEditor;
+﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -10,23 +9,30 @@ public class PlayerMovement : MonoBehaviour
     private PlayerAttack playerAttack;
     public AudioSource moveSound;
 
-    private float speed;
+    public GameObject playerSprite;
+
     public Vector3 movement;
+    private Vector3 shootDirection;
     public bool canMove = true;
+    private bool canDash = true;
 
     void Start()
     {
-        animator = GetComponent<Animator>();
+        animator = playerSprite.GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody2D>();
         playerAttack = GetComponent<PlayerAttack>();
+
+        movement = new Vector3(1, 0);
     }
 
     void FixedUpdate()
     {
         if (canMove)
         {
+            shootDirection = playerAttack.shootDirection;
+
+            float speed = GetComponent<PlayerStats>().moveSpeed;
             movement = new Vector3(joystick.Horizontal, joystick.Vertical, 0f);
-            speed = GetComponent<PlayerStats>().moveSpeed;
 
             MoveSoundEffects();
 
@@ -34,13 +40,13 @@ public class PlayerMovement : MonoBehaviour
             animator.SetFloat("VerMove", movement.y);
             animator.SetFloat("MagMove", movement.magnitude);
 
-            rigidBody.velocity = new Vector2(movement.x, movement.y) * speed;
+            rigidBody.velocity = movement * speed;
 
-            if ((movement.x == 0 && movement.y == 0) && (playerAttack.shootDirection.x != 0 || playerAttack.shootDirection.y != 0))
+            if ((movement.x == 0 && movement.y == 0) && (shootDirection.x != 0 || shootDirection.y != 0))
             {
-                animator.SetFloat("HorIdle", playerAttack.shootDirection.x);
-                animator.SetFloat("VerIdle", playerAttack.shootDirection.y);
-                animator.SetFloat("MagIdle", playerAttack.shootDirection.magnitude);
+                animator.SetFloat("HorIdle", shootDirection.x);
+                animator.SetFloat("VerIdle", shootDirection.y);
+                animator.SetFloat("MagIdle", shootDirection.magnitude);
             }
         }
     }
@@ -58,5 +64,34 @@ public class PlayerMovement : MonoBehaviour
         {
             moveSound.Stop();
         }
+    }
+
+    public void Dash()
+    {
+        if (canDash)
+        {
+            canMove = false;
+            canDash = false;
+            if (movement.magnitude == 0)
+            {
+                rigidBody.velocity = shootDirection * 10f;
+                animator.SetFloat("HorMove", shootDirection.x);
+                animator.SetFloat("VerMove", shootDirection.y);
+                animator.SetFloat("MagMove", shootDirection.magnitude);
+            }
+            else
+            {
+                rigidBody.velocity = movement * 10f;
+            }
+            StartCoroutine(DashCooldown(0.2f, 3f));
+        }
+    }
+
+    private IEnumerator DashCooldown(float duration, float cooldown)
+    {
+        yield return new WaitForSeconds(duration);
+        canMove = true;
+        yield return new WaitForSeconds(cooldown);
+        canDash = true;
     }
 }

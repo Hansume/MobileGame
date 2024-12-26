@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,7 +7,6 @@ public class PlayerInstance : MonoBehaviour
     public PlayerStats playerStats;
 
     public GameObject player;
-    public Transform playerTransform;
 
     private void Awake()
     {
@@ -30,6 +27,11 @@ public class PlayerInstance : MonoBehaviour
     public void DamagePlayer(float damage)
     {
         playerStats.currentHealth -= damage;
+    }
+
+    public void HealPlayer(float damage)
+    {
+        playerStats.currentHealth += damage;
     }
 
     public void KillPlayer()

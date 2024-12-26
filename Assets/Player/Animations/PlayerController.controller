@@ -276,7 +276,7 @@ AnimatorState:
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
   m_Mirror: 0
-  m_SpeedParameterActive: 1
+  m_SpeedParameterActive: 0
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
@@ -493,3 +493,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13aac25883a1d914681fddc19c0f8bbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2860455274219080020
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b5d5ebff27c66b419cecf10d3efe3b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  arrowPrefab: {fileID: 6028175612957436214, guid: 0f891fe2b71a1ea41b2268da60d2cdf5,
+    type: 3}
+  spawnPoint: {fileID: 0}
+  playerAttack: {fileID: 0}
+  triggerFrame: 2
+  frameCount: 0

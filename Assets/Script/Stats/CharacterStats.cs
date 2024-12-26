@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class CharacterStats : MonoBehaviour
 {
     public float maxHealth;
     public float currentHealth;
     public float moveSpeed;
+    public int damage;
 
     public bool canHit = true;
     public bool isDead = false;
@@ -24,6 +22,15 @@ public class CharacterStats : MonoBehaviour
         {
             isDead = true;
             Die();
+        }
+    }
+
+    public void Heal(int healAmount)
+    {
+        currentHealth += healAmount;
+        if (currentHealth >= maxHealth)
+        {
+            currentHealth = maxHealth;
         }
     }
 

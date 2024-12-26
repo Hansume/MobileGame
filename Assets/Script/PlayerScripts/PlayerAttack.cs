@@ -8,13 +8,13 @@ public class PlayerAttack : MonoBehaviour
     private PlayerMovement playerMovement;
 
     public Transform firePoint;
-
-    private bool isFired = false;
+    public GameObject playerSprite;
 
     public Vector2 shootDirection = new Vector2(1,0);
+
     void Start()
     {
-        animator = GetComponent<Animator>();
+        animator = playerSprite.GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody2D>();
         playerMovement = GetComponent<PlayerMovement>();
     }
@@ -50,23 +50,17 @@ public class PlayerAttack : MonoBehaviour
         animator.SetFloat("VerShoot", shootDirection.y);
     }
 
-    private void FireArrow()
+    public void FireArrow()
     {
-        if (!isFired)
-        {
-            isFired = true;
-            fireArrowAudio.Play();
-            GameObject arrow = Pooler.instance.SpawnFromPool("Player arrow", firePoint.position, Quaternion.identity);
-            arrow.GetComponent<Rigidbody2D>().velocity = shootDirection * 7.5f;
-            arrow.transform.Rotate(0, 0, Mathf.Atan2(shootDirection.y, shootDirection.x) * Mathf.Rad2Deg);
-        }
+        fireArrowAudio.Play();
+        GameObject arrow = Pooler.instance.SpawnFromPool("Player arrow", firePoint.position, Quaternion.identity);
+        arrow.GetComponent<Rigidbody2D>().velocity = shootDirection * 7.5f;
+        arrow.transform.Rotate(0, 0, Mathf.Atan2(shootDirection.y, shootDirection.x) * Mathf.Rad2Deg);
     }
 
-    private void ResetAttack()
+    public void ResetAttack()
     {
-        isFired = false;
         animator.SetBool("isShooting", false);
         playerMovement.canMove = true;
-
     }
 }
