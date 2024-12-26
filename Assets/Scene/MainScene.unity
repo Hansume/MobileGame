@@ -32445,12 +32445,12 @@ PrefabInstance:
     - target: {fileID: 2577585254963922481, guid: f6a5710827e32d3489da2c249e3bc400,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.68
       objectReference: {fileID: 0}
     - target: {fileID: 2577585254963922481, guid: f6a5710827e32d3489da2c249e3bc400,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 15.066
+      value: 0.11
       objectReference: {fileID: 0}
     - target: {fileID: 2577585254963922481, guid: f6a5710827e32d3489da2c249e3bc400,
         type: 3}
@@ -35907,8 +35907,13 @@ PrefabInstance:
       objectReference: {fileID: 1703326968}
     - target: {fileID: 2440844624711060802, guid: c5bdca1933fde624698bb8c6d6daa44b,
         type: 3}
+      propertyPath: blockPosition.x
+      value: -0.68
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440844624711060802, guid: c5bdca1933fde624698bb8c6d6daa44b,
+        type: 3}
       propertyPath: blockPosition.y
-      value: 15.066
+      value: 0.11
       objectReference: {fileID: 0}
     - target: {fileID: 7947911505737750448, guid: c5bdca1933fde624698bb8c6d6daa44b,
         type: 3}
@@ -103149,7 +103154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7953c87594d7ed469eec870c2029b7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 50
+  maxHealth: 10
   currentHealth: 0
   moveSpeed: 2
   damage: 0

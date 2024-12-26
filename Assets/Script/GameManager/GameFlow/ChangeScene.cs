@@ -10,7 +10,6 @@ public class ChangeScene : MonoBehaviour
     [SerializeField] private GameObject dialogueBox;
     [SerializeField] private Slider bossHealthbar;
     [SerializeField] private GameObject entrance;
-    [SerializeField] private GameObject statisticDisplay;
     [SerializeField] private AudioSource finalBossTheme;
     [SerializeField] private Transform playerTeleportPosition;
     [SerializeField] private Transform npcPosition;
@@ -28,13 +27,6 @@ public class ChangeScene : MonoBehaviour
 
     void Update()
     {
-        TextDisplay display = statisticDisplay.GetComponent<TextDisplay>();
-        if (display != null)
-        {
-            Debug.Log("Not null");
-        }
-
-
         Vector3 playerTransform = PlayerInstance.instance.transform.position;
 
         if (GemCount.instance.lastBoss && dialogueBox.GetComponent<DialogueUI>().endOfDialogue)
@@ -109,8 +101,8 @@ public class ChangeScene : MonoBehaviour
         var historyReq = new AddHistoryReq
         {
             userId = PlayerPrefs.GetInt("UserId"),
-            death = 1,
-            time = 100,
+            death = TextDisplay.deathCount,
+            time = (int)TextDisplay.timer,
             level = 1
         };
 

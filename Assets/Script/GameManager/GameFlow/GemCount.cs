@@ -8,7 +8,7 @@ public class GemCount : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        gemCount = 2;
+        gemCount = 0;
     }
 
     public void IncreaseGemCount()
