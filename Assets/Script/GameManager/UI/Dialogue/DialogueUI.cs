@@ -9,6 +9,7 @@ public class DialogueUI : MonoBehaviour
     [SerializeField] private float displaySpeed;
     [SerializeField] private DialogueObject initialDialogue;
     [SerializeField] private DialogueObject finalDialogue;
+    public bool endOfDialogue = false;
 
     private void OnEnable()
     {
@@ -24,17 +25,19 @@ public class DialogueUI : MonoBehaviour
 
     private IEnumerator StepThroughDiablogue (DialogueObject dialogueObject)
     {
+        endOfDialogue = false;
         foreach (string dialogue in dialogueObject.Dialogue)
         {
             yield return StartCoroutine(TypeText(dialogue));
             yield return new WaitForSeconds(1f);
-            //yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Escape));
         }
         CloseDialogue();
+        endOfDialogue = true;
     }
 
     public void CloseDialogue()
     {
+        endOfDialogue = false;
         dialogueBox.SetActive(false);
         textLabel.text = string.Empty;
     }
@@ -61,5 +64,4 @@ public class DialogueUI : MonoBehaviour
         textLabel.text = text;
     }
     #endregion
-
 }

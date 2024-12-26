@@ -28,7 +28,7 @@ public class HistoryController : MonoBehaviour
 
     [SerializeField] private float fadeInDuration = 0.5f;
 
-    private string API_URL = "localhost:8080/api/game/history/";
+    private string API_URL = "http://26.123.150.88:8080/api/game/history/";
 
     private void Start()
     {

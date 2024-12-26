@@ -14,7 +14,7 @@ public class ForgotPasswordController : MonoBehaviour
     public GameObject loginView;
     public GameObject resetView;
     public TMP_Text messageText;
-    private const string endpoint = "http://localhost:8080/api/auth/forgot-password";
+    private const string endpoint = "http://26.123.150.88:8080/api/auth/forgot-password";
 
     private void Start()
     {

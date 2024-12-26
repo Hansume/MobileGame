@@ -16,7 +16,7 @@ public class ChangePasswordController : MonoBehaviour
     public Button btnSubmit;
     public Button btnBack;
     public GameObject dashboardView;
-    private const string endpoint = "localhost:8080/api/auth/change-password";
+    private const string endpoint = "http://26.123.150.88:8080/api/auth/change-password";
 
     // Start is called before the first frame update
     private void Start()

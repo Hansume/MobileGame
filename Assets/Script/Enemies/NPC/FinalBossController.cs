@@ -8,7 +8,7 @@ public class FinalBossController : EnemiesController
     [SerializeField] private GameObject thunder;
     private int numberOfThunder = 5;
 
-    private void Update()
+    protected override void Update()
     {
         base.Update();
         if(state == enemyState.Attack2)

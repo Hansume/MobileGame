@@ -17,7 +17,7 @@ public class RegisterController : MonoBehaviour
     public TMP_Text messageText;
     public Button btnLogin;
     public Button btnRegister;
-    private const string endpoint = "http://localhost:8080/api/auth/register";
+    private const string endpoint = "26.123.150.88:8080/api/auth/register";
 
     private void Start()
     {

@@ -28,7 +28,7 @@ public class RankingController : MonoBehaviour
 
     [SerializeField] private float fadeInDuration = 0.5f;
 
-    private const string API_URL = "localhost:8080/api/game/ranking";
+    private const string API_URL = "http://26.123.150.88:8080/api/game/ranking";
 
     private void Start()
     {

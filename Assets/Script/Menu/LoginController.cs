@@ -17,7 +17,7 @@ public class LoginController : MonoBehaviour
     public Button btnLogin;
     public Button btnRegister;
     public Button btnForgotPassword;
-    private const string endpoint = "http://localhost:8080/api/auth/login";
+    private const string endpoint = "http://26.123.150.88:8080/api/auth/login";
 
     private void Start()
     {
